@@ -1,0 +1,97 @@
+.dashboard-page {
+  padding: 24px;
+  background: #eeecec;
+  min-height: 100vh;
+}
+
+/* Header */
+.dashboard-header h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.dashboard-header p {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* Stat cards */
+.stats-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  
+}
+
+/* Lower section */
+.dashboard-lower {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12rem;
+  margin-top: 24px;
+    max-width: 1320px;
+}
+
+/* Cards */
+.pie-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 8rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: visible;
+
+}
+
+.large-card {
+  min-height: 260px;
+}
+.dashboard-container {
+
+  max-width: 1400px;
+  padding: 0 24px;
+
+
+}
+
+
+/* Tablet */
+
+/* ===============================
+   TABLET (<= 1023px)
+================================ */
+@media (max-width: 1023px) {
+  .dashboard-lower {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===============================
+   MOBILE (<= 767px)
+================================ */
+@media (max-width: 767px) {
+  .dashboard-lower {
+    grid-template-columns: 1fr;
+  }
+
+  .pie-card {
+    padding: 16px;
+  }
+}
+
+
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .dashboard-page {
+    padding: 16px;
+  }
+}
+@media (min-width: 1690px) {
+  .dashboard-container {
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+}
