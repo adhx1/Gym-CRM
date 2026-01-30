@@ -1,3 +1,6 @@
+
+
+
 """
 Django settings for backend project.
 
@@ -12,7 +15,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,12 +26,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-x1(!n*s2_g-qkj_9=jb3^)kp_1b-nub0_4)gep8(smfd9nmd7n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = os.getenv("SECRET_KEY")
 
-ALLOWED_HOSTS = []
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY is not set in environment variables")
+
+
+DEBUG = os.getenv("DEBUG") == "True"
+
+ALLOWED_HOSTS = [
+    "yourusername.pythonanywhere.com"
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 # Application definition
@@ -160,7 +174,10 @@ CRONJOBS = [
     ("0 10 * * *", "notifications.utils.send_due_reminders"),
 ]
 
-WHATSAPP_MODE = "DEV"  # DEV or PROD
+WHATSAPP_MODE = "PROD"  # DEV or PROD
 
 WHATSAPP_ACCESS_TOKEN = os.getenv("WHATSAPP_ACCESS_TOKEN")
-WHATSAPP_PHONE_ID = os.getenv("WHATSAPP_PHONE_ID")
+WHATSAPP_PHONE_NUMBER_ID = os.getenv("WHATSAPP_PHONE_NUMBER_ID")
+WHATSAPP_BUSINESS_ACCOUNT_ID = os.getenv("WHATSAPP_BUSINESS_ACCOUNT_ID")
+
+
