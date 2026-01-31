@@ -37,7 +37,10 @@ if not SECRET_KEY:
 DEBUG = os.getenv("DEBUG") == "True"
 
 ALLOWED_HOSTS = [
-    "yourusername.pythonanywhere.com"
+    "adhx1.pythonanywhere.com",
+    "localhost",
+    "127.0.0.1",
+
 ]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
