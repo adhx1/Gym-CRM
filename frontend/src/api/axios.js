@@ -1,3 +1,6 @@
+console.log("API BASE URL:", import.meta.env.VITE_API_BASE_URL);
+
+
 import axios from "axios";
 
 if (!import.meta.env.VITE_API_BASE_URL) {
