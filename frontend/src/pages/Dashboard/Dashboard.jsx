@@ -157,3 +157,4 @@ const revenueByPlanData = stats
     </div>
   );
 }
+}

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import authApi from "../../api/authApi";
-import api from "../../api/axios";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./Auth.css";
@@ -25,7 +24,7 @@ export default function Auth() {
     try {
       if (isLogin) {
         // LOGIN
-        const res = await api.post("owners/login/", {
+        const res = await authApi.post("owners/login/", {
           username,
           password,
         });
@@ -34,7 +33,7 @@ export default function Auth() {
         navigate("/");
       } else {
         // SIGNUP
-        await api.post("owners/register/", {
+        await authApi.post("owners/register/", {
           username,
           password,
           gym_name,
