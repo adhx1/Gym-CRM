@@ -12,19 +12,21 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   const fetchStats = async () => {
-    try {
-      const res = await api.get("analytics/stats/");
-      setStats(res.data);
-    } catch (error) {
-      console.error("Failed to load dashboard stats", error);
-      if (error.response?.status === 401) {
-    localStorage.removeItem("access");
-    localStorage.removeItem("refresh");
-    window.location.href = "/auth";
-    
-      setLoading(false);
+  try {
+    const res = await api.get("analytics/stats/");
+    setStats(res.data);
+  } catch (error) {
+    console.error("Failed to load dashboard stats", error);
+
+    if (error.response?.status === 401) {
+      localStorage.removeItem("access");
+      localStorage.removeItem("refresh");
+      window.location.href = "/auth";
     }
-  };
+  } finally {
+    setLoading(false); // ✅ ALWAYS runs
+  }
+};
 
  useEffect(() => {
   const token = localStorage.getItem("access");
@@ -40,14 +42,13 @@ if (loading || !stats) {
 }
 
  
-const revenueByPlanData = stats
-  ? Object.entries(stats.revenue_by_plan).map(
-      ([name, value]) => ({
-        name,
-        value,
-      })
-    )
+const revenueByPlanData = stats?.revenue_by_plan
+  ? Object.entries(stats.revenue_by_plan).map(([name, value]) => ({
+      name,
+      value,
+    }))
   : [];
+
 
   return (
     <div className="dashboard-page">
@@ -157,4 +158,4 @@ const revenueByPlanData = stats
     </div>
   );
 }
-}
+
