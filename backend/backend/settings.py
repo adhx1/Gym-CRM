@@ -76,7 +76,11 @@ MIDDLEWARE = [
 AUTH_USER_MODEL = 'owners.Owner'
 
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
+
+CORS_ALLOWED_ORIGINS = [
+    "https://dfitcrm.netlify.app",
+]
 
 
 ROOT_URLCONF = 'backend.urls'

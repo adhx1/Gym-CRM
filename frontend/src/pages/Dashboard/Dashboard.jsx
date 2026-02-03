@@ -17,18 +17,27 @@ export default function Dashboard() {
       setStats(res.data);
     } catch (error) {
       console.error("Failed to load dashboard stats", error);
-    } finally {
+      if (error.response?.status === 401) {
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+    window.location.href = "/auth";
+    
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchStats();
-  }, []);
+ useEffect(() => {
+  const token = localStorage.getItem("access");
 
-  if (loading) {
-    return <p style={{ padding: 20 }}>Loading dashboard...</p>;
+  if (token) {
+    fetchStats();
   }
+}, []);
+
+
+if (loading || !stats) {
+  return <p style={{ padding: 20 }}>Loading dashboard...</p>;
+}
 
  
 const revenueByPlanData = stats
