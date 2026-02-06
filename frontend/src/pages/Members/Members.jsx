@@ -184,8 +184,7 @@ setFormData({
                   </button>
                   
                 </td>
-                <td>{member.start_date || "-"}</td>
-
+      <td>{member.start_date || member.join_date}</td>
               </tr>
             ))}
 
