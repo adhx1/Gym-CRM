@@ -12,3 +12,4 @@ class RegisterOwnerView(CreateAPIView):
 
 class LoginOwnerView(TokenObtainPairView):
     serializer_class = OwnerLoginSerializer
+    permission_classes = [AllowAny]

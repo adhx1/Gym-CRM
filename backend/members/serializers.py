@@ -10,4 +10,6 @@ class MemberSerializer(serializers.ModelSerializer):
             "join_date",
             "expiry_date",
             "is_active",
+            
+
         )

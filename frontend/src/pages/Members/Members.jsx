@@ -12,6 +12,8 @@ export default function Members() {
     phone: "",
     membership_type: "1",
     amount: "",
+    start_date: "",
+
   });
 
   // Fetch members
@@ -29,12 +31,18 @@ export default function Members() {
     e.preventDefault();
 
     if (editingMember) {
-      await api.put(`members/${editingMember.id}/`, formData);
+      await api.put(`members/${editingMember.id}/`, formData , );
     } else {
       await api.post("members/", formData);
     }
 
-    setFormData({ name: "", phone: "" });
+setFormData({
+  name: "",
+  phone: "",
+  membership_type: "1",
+  amount: "",
+  start_date: "",
+});
     setEditingMember(null);
     setShowForm(false);
     fetchMembers();
@@ -51,10 +59,14 @@ export default function Members() {
   // Edit
   const handleEdit = (member) => {
     setEditingMember(member);
-    setFormData({
-      name: member.name,
-      phone: member.phone,
-    });
+  setFormData({
+  name: member.name,
+  phone: member.phone,
+  membership_type: member.membership_type,
+  amount: member.amount || "",
+  start_date: member.start_date || "",
+});
+
     setShowForm(true);
   };
 
@@ -110,6 +122,16 @@ export default function Members() {
       amount: e.target.value || null,
     })
   }
+/>       
+<input
+  type="date"
+  value={formData.start_date}
+  onChange={(e) =>
+    setFormData({
+      ...formData,
+      start_date: e.target.value,
+    })
+  }
 />
 
 
@@ -130,6 +152,8 @@ export default function Members() {
               <th>Plan</th>
               <th>Status</th>
               <th>Actions</th>
+              <th>Date</th>
+             
             </tr>
           </thead>
 
@@ -140,6 +164,7 @@ export default function Members() {
                 <td>{member.name}</td>
                 <td>{member.phone}</td>
                 <td>{member.membership_type}</td>
+                
                 <td>
                   <span
                     className={
@@ -157,7 +182,10 @@ export default function Members() {
                   >
                     Delete
                   </button>
+                  
                 </td>
+                <td>{member.start_date || "-"}</td>
+
               </tr>
             ))}
 

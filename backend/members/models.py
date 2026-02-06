@@ -27,6 +27,8 @@ class Member(models.Model):
     phone = models.CharField(max_length=15)
 
     join_date = models.DateField(default=today_date)
+    start_date = models.DateField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     membership_type = models.CharField(
         max_length=2,
@@ -36,25 +38,25 @@ class Member(models.Model):
 
     amount = models.DecimalField(
         max_digits=8,
-          decimal_places=2,
-           null=True,
-           blank=True
-
-
+        decimal_places=2,
+        null=True,
+        blank=True
     )
 
     expiry_date = models.DateField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
 
+    # ✅ THIS MUST BE INSIDE THE CLASS
     def save(self, *args, **kwargs):
         months = int(self.membership_type)
-        self.expiry_date = self.join_date + timedelta(days=30 * months)
+
+        base_date = self.start_date or self.join_date
+        self.expiry_date = base_date + timedelta(days=30 * months)
 
         if self.amount is None:
             self.amount = MEMBERSHIP_PRICES.get(self.membership_type, 0)
+
         self.is_active = self.expiry_date >= now().date()
-        
-        
         super().save(*args, **kwargs)
 
     def __str__(self):

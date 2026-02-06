@@ -17,12 +17,17 @@ class OwnerSerializer(serializers.ModelSerializer):
         return owner
 
 
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 class OwnerLoginSerializer(TokenObtainPairSerializer):
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
+    username_field = "username"  # ✅ REQUIRED
 
-        token["gym_name"] = user.gym_name
-        token["email"] = user.email
+    def validate(self, attrs):
+        # This ensures correct auth handling for custom user
+        data = super().validate(attrs)
 
-        return token
+        data["gym_name"] = self.user.gym_name
+        data["username"] = self.user.username
+
+        return data
+

@@ -35,10 +35,10 @@ if not SECRET_KEY:
 
 
 DEBUG = os.getenv("DEBUG") == "True"
-
 ALLOWED_HOSTS = [
-    "adhx1.pythonanywhere.com"
-
+    "adhx1.pythonanywhere.com",
+    "127.0.0.1",
+    "localhost",
 ]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
@@ -76,11 +76,16 @@ MIDDLEWARE = [
 AUTH_USER_MODEL = 'owners.Owner'
 
 
-CORS_ALLOW_ALL_ORIGINS = False
+if DEBUG:
+    # ✅ Local development
+    CORS_ALLOW_ALL_ORIGINS = True
+else:
+    # ✅ Production
+    CORS_ALLOW_ALL_ORIGINS = False
+    CORS_ALLOWED_ORIGINS = [
+        "https://dfitcrm.netlify.app",
+    ]
 
-CORS_ALLOWED_ORIGINS = [
-    "https://dfitcrm.netlify.app",
-]
 
 
 ROOT_URLCONF = 'backend.urls'
