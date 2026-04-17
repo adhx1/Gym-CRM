@@ -12,8 +12,7 @@ export default function Members() {
     phone: "",
     membership_type: "1",
     amount: "",
-    start_date: "",
-
+    join_date: "",
   });
 
   // Fetch members
@@ -41,7 +40,7 @@ setFormData({
   phone: "",
   membership_type: "1",
   amount: "",
-  start_date: "",
+  join_date: "",
 });
     setEditingMember(null);
     setShowForm(false);
@@ -64,7 +63,7 @@ setFormData({
   phone: member.phone,
   membership_type: member.membership_type,
   amount: member.amount || "",
-  start_date: member.start_date || "",
+  join_date: member.join_date || "",
 });
 
     setShowForm(true);
@@ -125,11 +124,11 @@ setFormData({
 />       
 <input
   type="date"
-  value={formData.start_date}
+  value={formData.join_date}
   onChange={(e) =>
     setFormData({
       ...formData,
-      start_date: e.target.value,
+      join_date: e.target.value,
     })
   }
 />

@@ -7,9 +7,6 @@ class MemberSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = (
             "owner",
-            "join_date",
             "expiry_date",
             "is_active",
-            
-
         )

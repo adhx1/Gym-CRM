@@ -50,6 +50,12 @@ class Member(models.Model):
     def save(self, *args, **kwargs):
         months = int(self.membership_type)
 
+        # If user provided a start_date but no join_date (or vice versa), sync them
+        if self.start_date and not self.join_date:
+            self.join_date = self.start_date
+        elif self.join_date and not self.start_date:
+            self.start_date = self.join_date
+
         base_date = self.start_date or self.join_date
         self.expiry_date = base_date + timedelta(days=30 * months)
 
