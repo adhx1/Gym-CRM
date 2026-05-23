@@ -5,6 +5,9 @@ from django.conf import settings
 from members.models import Member
 from django.utils.timezone import now
 
+import logging
+
+logger = logging.getLogger(__name__)
 def send_whatsapp_reminder(member):
     message = (
         f"Hi {member.name}, 👋\n"
@@ -47,8 +50,8 @@ def send_whatsapp_reminder(member):
 
     response = requests.post(url, json=payload, headers=headers)
     
-    print("STATUS CODE:", response.status_code)
-    print("RESPONSE:", response.text)
+    logger.error(f"STATUS CODE: {response.status_code}")
+    logger.error(f"RESPONSE: {response.text}")
 
     return response.json()
 
@@ -60,7 +63,8 @@ def send_expired_members_reminders(owner):
         owner=owner,
         expiry_date__lt=today
     )
-    print("Expired count:", expired_members.count())
+    
+    logger.error(f"Expired count: {expired_members.count()}")
 
     for member in expired_members:
         send_whatsapp_reminder(member)
