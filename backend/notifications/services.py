@@ -60,6 +60,7 @@ def send_expired_members_reminders(owner):
         owner=owner,
         expiry_date__lt=today
     )
+    print("Expired count:", expired_members.count())
 
     for member in expired_members:
         send_whatsapp_reminder(member)
