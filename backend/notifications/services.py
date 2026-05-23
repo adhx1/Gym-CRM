@@ -17,7 +17,7 @@ def send_whatsapp_reminder(member):
         return {"status": "dev_sent"}
 
     # PROD MODE (Meta WhatsApp Cloud API)
-    url = f"https://graph.facebook.com/v18.0/{settings.WHATSAPP_PHONE_ID}/messages"
+    url = f"https://graph.facebook.com/v18.0/{settings.WHATSAPP_PHONE_NUMBER_ID}/messages"
 
     payload = {
         "messaging_product": "whatsapp",

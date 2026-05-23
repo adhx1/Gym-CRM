@@ -9,4 +9,6 @@ urlpatterns = [
     path("api/members/", include("members.urls")),
     path("api/subscriptions/", include("subscriptions.urls")),
     path("api/analytics/", include("analytics.urls")),
+    path("api/notifications/", include("notifications.urls")),  # ✅ IMPORTANT
+
 ]

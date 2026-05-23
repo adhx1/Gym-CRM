@@ -12,6 +12,11 @@ class MemberViewSet(ModelViewSet):
     def get_queryset(self):
         return Member.objects.filter(owner=self.request.user)
 
+    def create(self, request, *args, **kwargs):
+        print("CREATE HIT ✅")
+        print(request.data)
+        return super().create(request, *args, **kwargs)
+
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
