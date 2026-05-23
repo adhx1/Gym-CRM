@@ -1,3 +1,5 @@
+from urllib import response
+
 import requests
 from django.conf import settings
 from members.models import Member
@@ -44,6 +46,10 @@ def send_whatsapp_reminder(member):
     }
 
     response = requests.post(url, json=payload, headers=headers)
+    
+    print("STATUS CODE:", response.status_code)
+    print("RESPONSE:", response.text)
+
     return response.json()
 
 
