@@ -15,7 +15,7 @@ export default function Members() {
     join_date: "",
   });
 
-  const handlePaid = async (id) => {
+const handlePaid = async (id) => {
   const confirmPaid = window.confirm(
     "Confirm membership renewal?"
   );
@@ -28,7 +28,6 @@ export default function Members() {
   } catch (err) {
     console.error(err);
   }
-};
 };
   // Fetch members
   const fetchMembers = async () => {
