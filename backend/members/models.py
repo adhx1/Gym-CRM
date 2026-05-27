@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.timezone import now
 from datetime import timedelta
 
-from matplotlib.dates import relativedelta
+from dateutil.relativedelta import relativedelta
 from owners.models import Owner
 
 def today_date():
