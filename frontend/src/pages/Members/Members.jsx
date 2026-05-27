@@ -16,12 +16,19 @@ export default function Members() {
   });
 
   const handlePaid = async (id) => {
+  const confirmPaid = window.confirm(
+    "Confirm membership renewal?"
+  );
+
+  if (!confirmPaid) return;
+
   try {
     await api.post(`members/${id}/mark-paid/`);
     fetchMembers();
   } catch (err) {
     console.error(err);
   }
+};
 };
   // Fetch members
   const fetchMembers = async () => {
@@ -159,7 +166,7 @@ setFormData({
               <th>Plan</th>
               <th>Status</th>
               <th>Actions</th>
-              <th>Join Date</th>
+              <th>Renewal Date</th>
               <th>Due Date</th>
               
             </tr>
@@ -195,7 +202,7 @@ setFormData({
                     </button>
                   
                 </td>
-         <td>{member.join_date}</td> 
+         <td>{member.start_date || member.join_date}</td> 
          <td>{member.expiry_date}</td>  
                     
          </tr>
