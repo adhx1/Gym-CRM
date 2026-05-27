@@ -15,6 +15,14 @@ export default function Members() {
     join_date: "",
   });
 
+  const handlePaid = async (id) => {
+  try {
+    await api.post(`members/${id}/mark-paid/`);
+    fetchMembers();
+  } catch (err) {
+    console.error(err);
+  }
+};
   // Fetch members
   const fetchMembers = async () => {
     const res = await api.get("members/");
@@ -151,8 +159,9 @@ setFormData({
               <th>Plan</th>
               <th>Status</th>
               <th>Actions</th>
-              <th>Date</th>
-             
+              <th>Join Date</th>
+              <th>Due Date</th>
+              
             </tr>
           </thead>
 
@@ -181,10 +190,15 @@ setFormData({
                   >
                     Delete
                   </button>
+                  <button onClick={() => handlePaid(member.id)}>
+                     Paid
+                    </button>
                   
                 </td>
-      <td>{member.start_date || member.join_date}</td>
-              </tr>
+         <td>{member.join_date}</td> 
+         <td>{member.expiry_date}</td>  
+                    
+         </tr>
             ))}
 
             {members.length === 0 && (

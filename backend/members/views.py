@@ -4,7 +4,9 @@ from .serializers import MemberSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .utils import expire_members
-
+from django.utils.timezone import now
+from rest_framework.permissions import IsAuthenticated
+from dateutil.relativedelta import relativedelta
 
 class MemberViewSet(ModelViewSet):
     serializer_class = MemberSerializer
@@ -27,3 +29,33 @@ class ExpireMembersView(APIView):
         return Response({
             "expired_members": count
         })
+class MarkMemberPaidView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, id):
+        try:
+            member = Member.objects.get(id=id, owner=request.user)
+
+            months = int(member.membership_type)
+
+            # renew from today
+            member.start_date = now().date()
+
+            # calculate new due date
+            member.expiry_date = (
+                member.start_date +
+                relativedelta(months=months)
+            )
+
+            member.is_active = True
+
+            member.save()
+
+            return Response({
+                "message": "Membership renewed successfully"
+            })
+
+        except Member.DoesNotExist:
+            return Response({
+                "error": "Member not found"
+            }, status=404)

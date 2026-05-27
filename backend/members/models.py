@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.timezone import now
 from datetime import timedelta
+
+from matplotlib.dates import relativedelta
 from owners.models import Owner
 
 def today_date():
@@ -57,7 +59,7 @@ class Member(models.Model):
             self.start_date = self.join_date
 
         base_date = self.start_date or self.join_date
-        self.expiry_date = base_date + timedelta(days=30 * months)
+        self.expiry_date = base_date + relativedelta(months=months)
 
         if self.amount is None:
             self.amount = MEMBERSHIP_PRICES.get(self.membership_type, 0)
